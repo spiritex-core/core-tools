@@ -19,11 +19,13 @@
     "public": true,
     "files": [
         ".vscode/",
+        "build/",
         "docs/images/",
         "CliClient/",
         "RunServer/",
         "docker/",
         "tests/",
+        "utility/",
         "package.json",
         "license.md",
         "readme.md",
