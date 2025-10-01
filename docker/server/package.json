@@ -1,0 +1,11 @@
+{
+  "name": "spiritex-core-docker",
+  "description": "Docker image for services running on a SpiritEx network.",
+  "version": "0.5.0",
+  "main": "",
+  "author": "",
+  "license": "",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
