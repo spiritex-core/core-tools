@@ -6,7 +6,7 @@ LABEL		version=0.5.0
 COPY ./docker/server            /server
 WORKDIR /server
 RUN npm install --save @spiritex/spiritex-core
-# RUN npm install --save @spiritex/core-tools
+RUN npm install --save @spiritex/core-tools
 
 # VOLUME /server/host
 EXPOSE 4200
@@ -14,6 +14,6 @@ EXPOSE 4200
 # ENTRYPOINT [ "npx", "mocha", "-u", "bdd",  "tests/*.js", "--timeout", "0", "--slow", "20", "--colors" ]
 # ENTRYPOINT [ "npx", "mocha", "-u", "bdd",  "tests/000*.js", "--timeout", "0", "--slow", "20", "--colors" ]
 
-# ENTRYPOINT [ "npm", "SpiritEx-RunServer", "--folder", "/server/host" ]
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "node", "./node_modules/@spiritex/core-tools/RunServer/RunServer.js", "--host", "host", "--log" ]
+# ENTRYPOINT [ "bash" ]
 
