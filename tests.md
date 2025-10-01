@@ -40,6 +40,6 @@
     ✔ Should parse relaxed JS config with debug flag
 
 
-  30 passing (9ms)
+  30 passing (8ms)
 
 ```
