@@ -1,26 +1,28 @@
 {
-	"name": "@spiritex/core-tools",
-	"description": "Tools for working with and deploying services running on a SpiritEx network.",
-	"version": "0.5.0",
-	"main": "",
-	"author": "",
-	"license": "",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/spiritex-core/spiritex-core.git"
-	},
-	"authors": [
-		{
-			"name": "Andre' G. Bowlin",
-			"email": "andre@sicariiventuredev.com",
-			"homepage": ""
-		}
-	],
-	"public": true,
+    "name": "@spiritex/core-tools",
+    "description": "Tools for working with and deploying services running on a SpiritEx network.",
+    "version": "0.5.1",
+    "main": "",
+    "author": "",
+    "license": "",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/spiritex-core/core-tools.git"
+    },
+    "authors": [
+        {
+            "name": "Andre' G. Bowlin",
+            "email": "andre@sicariiventuredev.com",
+            "homepage": ""
+        }
+    ],
+    "public": true,
     "files": [
         ".vscode/",
         "docs/images/",
-        "src/",
+        "CliClient/",
+        "RunServer/",
+        "docker/",
         "tests/",
         "package.json",
         "license.md",
@@ -33,23 +35,23 @@
         "spiritex-core",
         "spiritex server"
     ],
-	"bin": {
-		"SpiritEx-RunServer": "./RunServer/RunServer.js"
-	},
-	"scripts": {
-		"Docker-Build": "docker build -f docker/spiritex-core.dockerfile -t spiritex/spiritex-core .",
-		"Run-Server": "node RunServer/RunServer.js",
-		"Run-Tests": "npx mocha -u bdd tests/*.js --timeout 0 --slow 20 --colors",
+    "bin": {
+        "SpiritEx-RunServer": "./RunServer/RunServer.js"
+    },
+    "scripts": {
+        "Docker-Build": "docker build -f docker/spiritex-core.dockerfile -t spiritex/spiritex-core .",
+        "Run-Server": "node RunServer/RunServer.js",
+        "Run-Tests": "npx mocha -u bdd tests/*.js --timeout 0 --slow 20 --colors",
         "DevOps: run tests": "npx @liquicode/devops --tasks .\\build\\build.tasks.js run_tests",
         "DevOps: build docs": "npx @liquicode/devops --tasks .\\build\\build.tasks.js build_docs",
         "DevOps: publish version": "npx @liquicode/devops --tasks .\\build\\build.tasks.js publish_version",
         "DevOps: start new version": "npx @liquicode/devops --tasks .\\build\\build.tasks.js start_new_version"
-	},
-	"dependencies": {
-		"@spiritex/spiritex-core": "^0.5.0"
-	},
-	"devDependencies": {
-		"@liquicode/devops": "^0.0.20",
-		"mocha": "^11.2.2"
-	}
+    },
+    "dependencies": {
+        "@spiritex/spiritex-core": "^0.5.0"
+    },
+    "devDependencies": {
+        "@liquicode/devops": "^0.0.20",
+        "mocha": "^11.2.2"
+    }
 }
