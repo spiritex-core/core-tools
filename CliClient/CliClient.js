@@ -3,13 +3,13 @@
 const LIB_FS = require( 'fs' );
 const LIB_PATH = require( 'path' );
 
-var COMAND_LINE = require( '../utility/CommandLine' );
+var COMAND_LINE = require( '../Utility_/CommandLine' );
 var CLI_ARGS = COMAND_LINE.ParseCommandLine();
 
 var CLI_NAME = 'CliClient';
 if ( process.env.SPIRITEX_CORE_CLI_NAME ) { CLI_NAME = process.env.SPIRITEX_CORE_CLI_NAME; }
 
-const CLIENT_LOADER = require( '../utility/ClientLoader' );
+const CLIENT_LOADER = require( '../Utility_/ClientLoader' );
 var ClientFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.http-client.js` );
 var SchemaFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.server-schema.json` );
 var SessionFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.session.json` );
