@@ -9,6 +9,7 @@ var CLI_ARGS = COMAND_LINE.ParseCommandLine();
 var CLI_NAME = 'CliClient';
 if ( process.env.SPIRITEX_CORE_CLI_NAME ) { CLI_NAME = process.env.SPIRITEX_CORE_CLI_NAME; }
 
+const CLIENT_LOADER = require( '../utility/ClientLoader' );
 var ClientFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.http-client.js` );
 var SchemaFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.server-schema.json` );
 var SessionFilename = LIB_PATH.join( process.cwd(), `.${CLI_NAME}.session.json` );
@@ -175,7 +176,8 @@ async function get_client()
 
 	if ( !LIB_FS.existsSync( ClientFilename ) )
 	{
-		await update_client_source();
+		// await update_client_source();
+		await UpdateCommand();
 	}
 	var client_factory = require( ClientFilename );
 
@@ -211,80 +213,90 @@ async function get_client()
 //=====================================================================
 
 
-async function update_client_source()
-{
-	// Get the client source from the server.
-	try
-	{
-		var parameters = {
-			Transport: 'http',
-			Platform: 'js',
-			UserType: 'network',
-		};
-		var fetch_result = await fetch(
-			`${ServerUrl}/Sdk/Client`,
-			{
-				headers:
-				{
-					// 'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				method: 'POST',
-				// body: parameters,
-				body: JSON.stringify( parameters ),
-			} );
-		if ( !fetch_result.ok ) { throw new Error( `[${fetch_result.status}] ${fetch_result.statusText}` ); }
-		var server_result = await fetch_result.json();
-		if ( !server_result.ok ) { throw new Error( `Server Error [${server_result.error}]` ); }
-		LIB_FS.writeFileSync( ClientFilename, server_result.result );
-		console.log( `The http client source was updated from the server. [${ClientFilename}]` );
-	}
-	catch ( error )
-	{
-		throw new Error( `Failed getting client source from the server: ${error.message}` );
-	}
-	return;
-}
+// async function update_client_source()
+// {
+// 	// Get the client source from the server.
+// 	try
+// 	{
+// 		var parameters = {
+// 			Transport: 'http',
+// 			Platform: 'js',
+// 			UserType: 'network',
+// 		};
+// 		var fetch_result = await fetch(
+// 			`${ServerUrl}/Sdk/Client`,
+// 			{
+// 				headers:
+// 				{
+// 					// 'Accept': 'application/json',
+// 					'Content-Type': 'application/json'
+// 				},
+// 				method: 'POST',
+// 				// body: parameters,
+// 				body: JSON.stringify( parameters ),
+// 			} );
+// 		if ( !fetch_result.ok ) { throw new Error( `[${fetch_result.status}] ${fetch_result.statusText}` ); }
+// 		var server_result = await fetch_result.json();
+// 		if ( !server_result.ok ) { throw new Error( `Server Error [${server_result.error}]` ); }
+// 		LIB_FS.writeFileSync( ClientFilename, server_result.result );
+// 		console.log( `The http client source was updated from the server. [${ClientFilename}]` );
+// 	}
+// 	catch ( error )
+// 	{
+// 		throw new Error( `Failed getting client source from the server: ${error.message}` );
+// 	}
+// 	return;
+// }
 
 
-async function update_server_schema()
-{
-	// Get the server schema from the server.
-	try
-	{
-		var parameters = {
-			UserType: 'network',
-		};
-		var fetch_result = await fetch(
-			`${ServerUrl}/Sdk/Schema`,
-			{
-				headers:
-				{
-					// 'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				method: 'POST',
-				// body: parameters,
-				body: JSON.stringify( parameters ),
-			} );
-		if ( !fetch_result.ok ) { throw new Error( `[${fetch_result.status}] ${fetch_result.statusText}` ); }
-		var server_result = await fetch_result.json();
-		if ( !server_result.ok ) { throw new Error( `Server Error [${server_result.error}]` ); }
-		LIB_FS.writeFileSync( SchemaFilename, JSON.stringify( server_result.result ) );
-		console.log( `The server schema was updated from the server. [${SchemaFilename}]` );
-	}
-	catch ( error )
-	{
-		throw new Error( `Failed getting server schema from the server: ${error.message}` );
-	}
-	return;
-}
+// async function update_server_schema()
+// {
+// 	// Get the server schema from the server.
+// 	try
+// 	{
+// 		var parameters = {
+// 			UserType: 'network',
+// 		};
+// 		var fetch_result = await fetch(
+// 			`${ServerUrl}/Sdk/Schema`,
+// 			{
+// 				headers:
+// 				{
+// 					// 'Accept': 'application/json',
+// 					'Content-Type': 'application/json'
+// 				},
+// 				method: 'POST',
+// 				// body: parameters,
+// 				body: JSON.stringify( parameters ),
+// 			} );
+// 		if ( !fetch_result.ok ) { throw new Error( `[${fetch_result.status}] ${fetch_result.statusText}` ); }
+// 		var server_result = await fetch_result.json();
+// 		if ( !server_result.ok ) { throw new Error( `Server Error [${server_result.error}]` ); }
+// 		LIB_FS.writeFileSync( SchemaFilename, JSON.stringify( server_result.result ) );
+// 		console.log( `The server schema was updated from the server. [${SchemaFilename}]` );
+// 	}
+// 	catch ( error )
+// 	{
+// 		throw new Error( `Failed getting server schema from the server: ${error.message}` );
+// 	}
+// 	return;
+// }
 
 
 async function UpdateCommand( Arguments )
 {
-	await update_client_source();
-	await update_server_schema();
+	// await update_client_source();
+	// await update_server_schema();
+	var result = null;
+
+	result = await CLIENT_LOADER.GetClientSource( ServerUrl );
+	LIB_FS.writeFileSync( ClientFilename, result );
+	console.log( `The http client source was updated from the server. [${ClientFilename}]` );
+
+	result = await CLIENT_LOADER.GetServerSchema( ServerUrl );
+	LIB_FS.writeFileSync( SchemaFilename, JSON.stringify( result ) );
+	console.log( `The server schema was updated from the server. [${SchemaFilename}]` );
+
 	return;
 }
 
@@ -468,7 +480,8 @@ async function ListCommand( Arguments )
 	// Get the schema.
 	if ( !LIB_FS.existsSync( SchemaFilename ) )
 	{
-		await update_server_schema();
+		// await update_server_schema();
+		await UpdateCommand();
 	}
 	var schema = require( SchemaFilename );
 
