@@ -1,7 +1,7 @@
 {
     "name": "@spiritex/core-tools",
     "description": "Tools for working with and deploying services running on a SpiritEx network.",
-    "version": "0.5.1",
+    "version": "0.5.2",
     "main": "",
     "author": "",
     "license": "",

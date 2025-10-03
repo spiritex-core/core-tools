@@ -1,6 +1,6 @@
 # @spiritex/core-tools
 
-* Version: 0.5.1
+* Version: 0.5.2
 * Dated: 2025-10-03
 
 
