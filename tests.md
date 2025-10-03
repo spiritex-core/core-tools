@@ -1,6 +1,6 @@
 # @spiritex/core-tools
 
-> Version: 0.5.1
+> Version: 0.5.2
 
 ## Test Results
 
@@ -40,6 +40,6 @@
     ✔ Should parse relaxed JS config with debug flag
 
 
-  30 passing (10ms)
+  30 passing (8ms)
 
 ```
