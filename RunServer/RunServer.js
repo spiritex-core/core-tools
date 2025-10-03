@@ -15,7 +15,7 @@ var ServerConfig = null;
 var Server = null;
 
 // var COMAND_LINE = require( LIB_PATH.join( SERVER_CORE_PATH, 'Server/CommandLine' ) );
-var COMAND_LINE = require( '../utility/CommandLine' );
+var COMAND_LINE = require( '../Utility/CommandLine' );
 var CLI_ARGS = COMAND_LINE.ParseCommandLine();
 
 
